@@ -54,16 +54,16 @@
             background-color: #46A358;
             transition: 0.4s ease;
         }
-        
+
         &:hover {
             color: #fff;
             transition-delay: 0.4s;
         }
-        
+
         &:hover::before {
             width: 100%;
         }
-        
+
         &::after {
             content: "";
             position: absolute;
@@ -75,7 +75,7 @@
             transition: 0.4s ease;
             z-index: -1;
         }
-    
+
         &:hover::after {
             height: 100%;
             transition-delay: 0.4s;
@@ -145,6 +145,21 @@
         display: none;
     }
 
+    &__wishlist-link {
+        position: relative;
+
+        span {
+            position: absolute;
+            top: -3px;
+            left: 14px;
+            background-color: #46A358;
+            padding: 0 3px;
+            border-radius: 50%;
+            font-size: 11px;
+            color: #fff;
+        }
+    }
+
 }
 
 
@@ -162,31 +177,31 @@
         &__container {
             justify-content: none;
         }
-        
+
         &__hamburger-btn {
             display: flex;
         }
 
         &__list {
-           background-color: #fff;
-           position: fixed;
-           flex-direction: column;
-           top: 0;
-           left: -100%;
-           width: 50%;
-           height: 100%;
-           box-shadow: 0 0 2px 0.5px gray;
-           padding-top: 50px;
-           gap: 50px; 
-           transition: all .4s ease-in-out;
+            background-color: #fff;
+            position: fixed;
+            flex-direction: column;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            box-shadow: 0 0 2px 0.5px gray;
+            padding-top: 50px;
+            gap: 50px;
+            transition: all .4s ease-in-out;
         }
-        
-            &__cancel-btn {
-                display: block;
-                position: absolute;
-                top: 10px;
-                right: 10px;
-            }
+
+        &__cancel-btn {
+            display: block;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     }
 }
 

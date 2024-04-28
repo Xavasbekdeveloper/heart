@@ -11,6 +11,7 @@ const loginCancel = document.querySelector('.login-cancel-btn');
 const registerCancel = document.querySelector('.register-cancel-btn')
 const categoriesList = document.querySelector('.Cards__categories')
 const SearchInput = document.querySelector('.header__search-input');
+const heartLink = document.querySelector('.header__wishlist-link span');
 
 const API_URL = 'https://dummyjson.com';
 
@@ -81,9 +82,21 @@ function mapProducts(products) {
 
     products.products.forEach(product => {
         card += `
-        <div class="card">
+        <div class="card" data-id="${product.id}">
             <div class="card__img">
-                <img class="card-img" data-id="${product.id}" src=${product.thumbnail} alt="img">
+                <img class="card-img"  src=${product.thumbnail} alt="img">
+                <div class="card__img__bottom">
+                    <button class="card__img__bottom-btn">
+                        <img src="../images/shopping 1.svg" alt="img">
+                    </button>
+                    <button class="card__img__bottom-btn card__img-heart-btn">
+                        <img class="card__img__heart-img card__heart-border" src="../images/heart 1.svg" alt="img">
+                        <img class="card__heart-background card__img__heart-img" src="./images/heart-solid.svg" alt="img">
+                    </button>
+                    <button class="card__img__bottom-btn">
+                        <img src="../images/search.svg" alt="img">
+                    </button>
+                </div>
             </div>  
             <div class="card__info">
                 <h3 class="card__title">${product.title}</h3>
@@ -189,11 +202,44 @@ loginBtn.addEventListener('click', () => {
     loginModal.classList.remove('hide-login')
 })
 
+const WISHLIST = 'wishlist';
+
+const addWishlist = async (id) => {
+    let data = await fetch(`${API_URL}/products/${id}`)
+
+    data
+        .json()
+        .then(product => {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+
+            let index = wishlist.findIndex(el => el.id === product.id)
+            let updateWishlist = []
+
+
+
+            if (index < 0) {
+                updateWishlist = [...wishlist, product]
+            } else {
+                updateWishlist = wishlist.filter(el => el.id !== product.id)
+            }
+
+            localStorage.setItem(WISHLIST, JSON.stringify(updateWishlist))
+            heartLink.innerHTML = updateWishlist.length
+        })
+        .catch(err => console.log(err))
+}
+
+heartLink.innerHTML = JSON.parse(localStorage.getItem(WISHLIST)).length || [].length
 
 cards.addEventListener('click', (e) => {
     if (e.target.className === "card-img") {
-        let id = e.target.dataset.id
+        let id = e.target.closest('.card').dataset.id
         window.open(`./pages/product.html?id=${id}`, "_self")
+    } else if (e.target.className.includes("card__img-heart-btn") ||
+        e.target.className.includes("card__img__heart-img")) {
+        let id = e.target.closest('.card').dataset.id
+        addWishlist(id)
+
     }
 })
 
