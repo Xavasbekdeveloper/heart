@@ -204,6 +204,8 @@ loginBtn.addEventListener('click', () => {
 
 const WISHLIST = 'wishlist';
 
+heartLink.innerHTML = JSON.parse(localStorage.getItem(WISHLIST)).length || [].length
+
 const addWishlist = async (id) => {
     let data = await fetch(`${API_URL}/products/${id}`)
 
@@ -229,7 +231,6 @@ const addWishlist = async (id) => {
         .catch(err => console.log(err))
 }
 
-heartLink.innerHTML = JSON.parse(localStorage.getItem(WISHLIST)).length || [].length
 
 cards.addEventListener('click', (e) => {
     if (e.target.className === "card-img") {
